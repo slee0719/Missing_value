@@ -1,0 +1,42 @@
+---
+title: "Diagnosis of Missing value Mechanism"
+author: "Seunghun Lee"
+date: "11/10/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r }
+library(dplyr)
+library(RBtest)
+library(DataExplorer)
+```
+
+```{r}
+dat <- read.csv("./data/framingham.csv")
+```
+
+
+## Diagnosis of Missing Value Mechanism
+
+`abs.nbrMD`: The absolute number of missing data per variable.
+
+`rel.nbrMD`: The percentage of missing data per variable.
+
+`type`: Vector of the same length than the number of variables of the dataset, where '0' is for variables with MCAR data, '1' is for variables with MAR data and '-1' is for complete variables.
+
+(https://rdrr.io/cran/RBtest/man/RBtest.html)
+
+```{r}
+RBtest(dat)
+```
+
+## Verify the number and percentage of missing values
+
+```{r}
+mice::md.pattern(dat, plot = TRUE, rotate.names = TRUE)
+DataExplorer::plot_missing(dat)
+```
